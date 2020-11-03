@@ -1,0 +1,11 @@
+input.form-checkbox:focus{
+    box-shadow: 0 0 0 0.2rem rgba(40,167,69,.1);
+    border-color: #10B42B;
+}
+input.form-checkbox:active{
+    box-shadow: 0 0 0 0.2rem rgba(40,167,69,.1);
+    border-color: #10B42B;
+}
+input.form-checkbox:checked{
+    color: #10B42B;
+}

@@ -1,0 +1,28 @@
+.btn-primary{
+    background-color: #10B42B;
+    color: #fff;
+    border: 1px solid #10B42B;
+}
+.btn-primary:hover{
+    background-color: #0b9021;
+}
+.btn-primary:focus{
+    background-color: #0b9021;
+    box-shadow: 0 0 0 0.2rem rgba(40,167,69,.5);
+    outline: none;
+}
+.btn-secondary{
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #10B42B;
+}
+.btn-secondary:hover{
+    background-color: #10B42B;
+    color: #fff;
+}
+.btn-secondary:focus{
+    color: #fff;
+    background-color: #10B42B;
+    box-shadow: 0 0 0 0.2rem rgba(40,167,69,.5);
+    outline: none;
+}

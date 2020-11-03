@@ -1,0 +1,8 @@
+input.form-input:focus{
+    box-shadow: 0 0 0 0.2rem rgba(40,167,69,.1);
+    border-color: #10B42B;
+}
+input.form-input:active{
+    border-color: #10B42B;
+    box-shadow: 0 0 0 0.2rem rgba(40,167,69,.1);
+}
