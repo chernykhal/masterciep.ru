@@ -13,7 +13,7 @@ class CreateProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('products_type', function (Blueprint $table) {
+        Schema::create('products_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('image_url');
@@ -24,7 +24,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('image_url');
             $table->string('unit');
-            $table->foreignId('product_type_id')->constrained('product_type');
+            $table->foreignId('product_type_id')->constrained('products_types');
             $table->timestamps();
         });
         Schema::create('users_products', function (Blueprint $table) {
