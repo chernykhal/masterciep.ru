@@ -35,7 +35,7 @@ export default {
     },
     props:{
         typesList:Object,
-        product:Array,
+        product:Object,
     },
 }
 </script>
