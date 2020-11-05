@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\ProductType;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -47,10 +48,9 @@ class ProductController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return RedirectResponse
+     * @throws ValidationException
      */
     public function store(Request $request)
     {
@@ -94,7 +94,7 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $typesList = ProductType::getList();
-        return Inertia::render('Products/Edit/Index', ['product' => $product, 'typesList' => $typesList]);
+        return Inertia::render('Products/Edit/Index', ['product' => $product, 'typesList' => $typesList,'modal_opened' => true]);
     }
 
     /**
