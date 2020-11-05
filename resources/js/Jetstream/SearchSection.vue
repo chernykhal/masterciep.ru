@@ -1,5 +1,4 @@
 <template>
-    <div class="px-4">
         <div class="mt-3 md:col-span-2">
             <div class="overflow-hidden">
                 <div class="bg-white sm:p-6">
@@ -11,8 +10,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
 </template>
 
 <script>
