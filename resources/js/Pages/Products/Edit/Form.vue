@@ -41,7 +41,7 @@
                         <img :src="product.image_url" alt="Current Profile Photo" class="h-20 w-20 object-cover">
                     </div>
                     <div class="mt-2" v-show="imagePreview">
-                    <span class="block rounded-full w-20 h-20"
+                    <span class="block w-20 h-20"
                           :style="'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' + imagePreview + '\');'">
                     </span>
                     </div>
@@ -85,7 +85,7 @@ export default {
         JetLabel,
         JetSecondaryButton,
     },
-    props:['typesList','product'],
+    props: ['typesList', 'product'],
     data() {
         return {
             form: this.$inertia.form({
@@ -107,7 +107,7 @@ export default {
             if (this.$refs.image) {
                 this.form.image = this.$refs.image.files[0]
             }
-            this.form.post(route('products.update',this.product), {
+            this.form.post(route('products.update', this.product), {
                 preserveScroll: true
             })
         },
