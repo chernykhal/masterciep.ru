@@ -18,6 +18,12 @@
                         </svg>
                     </inertia-link>
                 </div>
+                <div class="flex-1">
+                    <inertia-link :href="route('products.index',{'type':type.name})" title="Редактировать"
+                                  class="inline-flex bg-white tracking-widest focus:border-blue-300">
+                        вперед
+                    </inertia-link>
+                </div>
 
             </div>
         </div>

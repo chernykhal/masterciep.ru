@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * App\Models\Product
@@ -33,7 +35,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable =[
+    protected $fillable = [
         'name',
         'image_url',
         'unit',
@@ -53,6 +55,14 @@ class Product extends Model
                             return $query->orWhere('id', $value)
                                 ->orWhere('name', 'like', '%' . $value . '%')
                                 ->orWhere('product_type_id', $value);
+                        });
+                    }
+                    break;
+                case 'type':
+                    {
+                        $query->whereHas('type', static function (Builder $query) use ($value): Builder {
+                            return $query->where('id', $value)
+                                ->orWhere('name', 'like', '%' . $value . '%');
                         });
                     }
                     break;
@@ -125,5 +135,16 @@ class Product extends Model
         $this->product_type_id = $product_type_id;
     }
 
+    /**
+     * @return BelongsTo
+     */
+    public function type():BelongsTo
+    {
+        return $this->belongsTo(ProductType::class,'product_type_id');
+    }
 
+    public function user():BelongsToMany
+    {
+        return $this->belongsToMany(User::class,'users_products');
+    }
 }

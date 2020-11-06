@@ -5,7 +5,7 @@
                 Продукты
             </h2>
         </template>
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight text-center my-5">Все продукты</h2>
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight text-center my-5">Добавьте свои продукты</h2>
         <div class="max-w-7xl mx-auto">
             <jet-search-section>
                 <template #form>
