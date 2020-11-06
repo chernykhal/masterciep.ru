@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductTypeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +20,10 @@ Route::get('/', function () {
 });
 Route::put('products/store', [ProductController::class, 'store'])->name('products.store');
 Route::resource('products', ProductController::class)->except('store');
+
+Route::put('types/store', [ProductTypeController::class, 'store'])->name('types.store');
+Route::resource('types', ProductTypeController::class)->except(['store']);
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia\Inertia::render('Dashboard');
 })->name('dashboard');

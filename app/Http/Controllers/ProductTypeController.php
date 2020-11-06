@@ -2,40 +2,73 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\ProductType;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class ProductTypeController extends Controller
 {
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @var ProductType $productsTypes
      */
-    public function index()
+    protected $types;
+
+    public function __construct(ProductType $types)
     {
-        //
+        $this->types = $types;
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
+     */
+    public function index(Request $request)
+    {
+        $frd = $request->all();
+        $frd['search'] = $frd['search'] ?? '';
+        $types = $this->types->filter($frd)->orderbyDesc('id')->get()->all();
+        return Inertia::render('ProductType/Index/Index', ['search' => $frd['search'], 'types' => $types]);
+    }
+
+    /**
+     * @return Response
      */
     public function create()
     {
-        //
+        return Inertia::render('ProductType/Create/Index');
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return RedirectResponse
+     * @throws ValidationException
      */
     public function store(Request $request)
     {
-        //
+        $frd = $request->all();
+        $validated = Validator::make($frd, [
+            'name' => ['required', Rule::unique('products_types')],
+            'image' => ['required', 'mimes:jpeg,jpg,png', 'max:1024'],
+        ])->validateWithBag('storeType');
+        $extension = $request->image->extension();
+        $name = \Str::of($validated['name'])->ascii()->slug();
+        $request->image->storeAs('/public/productType/', $name . "." . $extension);
+        $url = Storage::url('productType/' . $name . "." . $extension);
+        $this->types->create([
+            'name' => $frd['name'],
+            'image_url' => $url,
+        ]);
+        return back()->with([
+            'modal_opened' => false
+        ]);
     }
 
     /**
@@ -50,26 +83,38 @@ class ProductTypeController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\ProductType  $productType
-     * @return \Illuminate\Http\Response
+     * @param ProductType $type
+     * @return Response
      */
-    public function edit(ProductType $productType)
+    public function edit(ProductType $type)
     {
-        //
+        return Inertia::render('ProductType/Edit/Index', ['type' => $type]);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ProductType  $productType
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param ProductType $productType
+     * @return RedirectResponse
+     * @throws ValidationException
      */
-    public function update(Request $request, ProductType $productType)
+    public function update(Request $request, ProductType $type)
     {
-        //
+        $frd = $request->all();
+        $validated = Validator::make($frd, [
+            'name' => ['required', Rule::unique('products_types')->ignore($type)],
+            'image' => ['required', 'mimes:jpeg,jpg,png', 'max:1024'],
+        ])->validateWithBag('updateType');
+        $extension = $request->image->extension();
+        $name = \Str::of($validated['name'])->ascii()->slug();
+        $request->image->storeAs('/public/productType/', $name . "." . $extension);
+        $url = Storage::url('productType/' . $name . "." . $extension);
+        $type->update([
+            'name' => $frd['name'],
+            'image_url' => $url,
+        ]);
+        return back()->with([
+            'modal_opened' => false
+        ]);
     }
 
     /**
