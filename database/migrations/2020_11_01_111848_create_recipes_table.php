@@ -19,7 +19,7 @@ class CreateRecipesTable extends Migration
             $table->string('image_url');
             $table->string('video_url')->nullable();
             $table->longText('process');
-            $table->integer('raiting')->nullable()->default(5);
+            $table->integer('rating')->nullable()->default(5);
             $table->timestamps();
         });
         Schema::create('recipes_products', function (Blueprint $table) {
