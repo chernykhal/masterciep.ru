@@ -1,8 +1,17 @@
-input.form-input:focus{
+textarea.form-input:focus, input.form-input:focus{
     box-shadow: 0 0 0 0.2rem rgba(40,167,69,.1);
     border-color: #10B42B;
 }
-input.form-input:active{
+
+textarea.form-input:active, input.form-input:active{
     border-color: #10B42B;
     box-shadow: 0 0 0 0.2rem rgba(40,167,69,.1);
+}
+
+.unit_input{
+    border-radius: 0;
+}
+input.unit_input:focus, input.unit_input:active{
+    border-radius: 0;
+    box-shadow: none;
 }

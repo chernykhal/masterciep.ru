@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductTypeController;
+use App\Http\Controllers\RecipeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +21,9 @@ Route::get('/', function () {
 });
 Route::put('products/store', [ProductController::class, 'store'])->name('products.store');
 Route::resource('products', ProductController::class)->except('store');
+
+Route::put('recipes/store', [RecipeController::class, 'store'])->name('recipes.store');
+Route::resource('recipes', RecipeController::class)->except('store');
 
 Route::put('types/store', [ProductTypeController::class, 'store'])->name('types.store');
 Route::resource('types', ProductTypeController::class)->except(['store']);

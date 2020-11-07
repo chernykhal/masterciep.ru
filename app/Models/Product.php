@@ -30,6 +30,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static Builder|Product whereUnit($value)
  * @method static Builder|Product whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \App\Models\ProductType $type
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User[] $user
+ * @property-read int|null $user_count
  */
 class Product extends Model
 {
@@ -41,6 +44,13 @@ class Product extends Model
         'unit',
         'product_type_id',
     ];
+
+    public static function getList()
+    {
+        return self::select(['id', 'name','unit'])
+            ->orderbyDesc('id')->get()
+            ->toArray();
+    }
 
     public function scopeFilter(Builder $query, array $frd): Builder
     {
