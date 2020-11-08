@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * App\Models\Product
@@ -156,5 +157,13 @@ class Product extends Model
     public function user():BelongsToMany
     {
         return $this->belongsToMany(User::class,'users_products');
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function recipes():BelongsToMany
+    {
+        return $this->belongsToMany(Recipe::class,'recipes_products','product_id','recipe_id');
     }
 }

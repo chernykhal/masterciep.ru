@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * App\Models\Recipe
@@ -144,5 +146,14 @@ class Recipe extends Model
         }
         return $query;
     }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function products():BelongsToMany
+    {
+        return $this->belongsToMany(Product::class,'recipes_products','recipe_id','product_id');
+    }
+
 
 }

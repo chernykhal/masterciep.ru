@@ -38,41 +38,57 @@
             </div>
             <div class="col-span-6 sm:col-span-4">
                 <jet-label for="process" value="Процесс"/>
-                <jet-text id="process" type="text" class="mt-1 block w-full" v-model="form.process"/>
+                <jet-text id="process" type="text" class="mt-1 block w-full" rows="5" v-model="form.process"/>
                 <jet-input-error :message="form.error('process')" class="mt-2"/>
             </div>
             <div class="col-span-6 sm:col-span-4">
                 <jet-label class="text-center" value="Ингредиенты"/>
-                <div class="relative flex flex-row list-item" v-for="(ingredient, index) in form.ingredients">
-                    <div class="flex-auto relative">
-                        <select name="product_id[]"
-                                class="block appearance-none bg-white text-gray-700 w-full py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                v-model="ingredient.id">
-                            <option v-for="product in productsList" :key="product.id" :value="product.id">{{
-                                    product.name
-                                }}, {{product.unit}}
-                            </option>
-                        </select>
-                        <div
-                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
-                            </svg>
+                <div class="relative flex flex-row justify-between" v-for="(ingredient, index) in form.ingredients">
+                    <div class="list-item flex-auto flex flex-row justify-between">
+                        <div class="relative flex-auto">
+                            <select name="product_id[]"
+                                    class="block appearance-none bg-white text-gray-700 w-full py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    v-model="ingredient.product_id">
+                                <option v-for="product in productsList" :key="product.id" :value="product.id">{{
+                                        product.name
+                                    }}, {{ product.unit }}
+                                </option>
+                            </select>
+                            <div
+                                class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                     viewBox="0 0 20 20">
+                                    <path
+                                        d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                                </svg>
+                            </div>
+                            <jet-input-error :message="form.error('product_id')" class="mt-2"/>
                         </div>
-                        <jet-input-error :message="form.error('product_id')" class="mt-2"/>
-                    </div>
-                    <div class="flex-1">
-                        <jet-input type="text" class="mt-1 block w-full border-r-0 border-t-0 border-l-0 border-r-0 unit_input" v-model="ingredient.value"/>
-                        <jet-input-error :message="form.error('unit_value')" class="mt-2"/>
+                        <div class="flex-1 ml-4">
+                            <jet-input type="text"
+                                       class="block w-full border-r-0 border-t-0 border-l-0 border-r-0 unit_input text-center"
+                                       v-model="ingredient.unit_value"/>
+                            <jet-input-error :message="form.error('unit_value')" class="mt-2"/>
+                        </div>
+                        <div class="flex-auto self-center text-right mr-4 flex justify-end">
+                            <button @click="removeIngredient(ingredient)" type="button" class="focus:outline-none self-center">
+                                <svg class="w-5 h-5" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="9.5" cy="9.5" r="9" fill="white" stroke="#FF0000"/>
+                                    <line x1="14" y1="9.5" x2="5" y2="9.5" stroke="#FF0000"/>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <button @click="addIngredient" type="button" class="text-center py-3 w-full justify-center flex list-item focus:outline-none">
+                <button @click="addIngredient" type="button"
+                        class="text-center py-3 w-full justify-center flex list-item focus:outline-none">
                     <svg class="w-5 h-5" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="9.5" cy="9.5" r="9" fill="white" stroke="#10B42B"/>
                         <line x1="9.5" y1="5" x2="9.5" y2="14" stroke="#10B42B"/>
                         <line x1="14" y1="9.5" x2="5" y2="9.5" stroke="#10B42B"/>
                     </svg>
                 </button>
+                <jet-input-error :message="form.error('ingredients')" class="mt-2"/>
             </div>
         </template>
 
@@ -149,7 +165,13 @@ export default {
             reader.readAsDataURL(this.$refs.image.files[0]);
         },
         addIngredient: function () {
-            this.form.ingredients.push({value:''});
+            this.form.ingredients.push({product_id:'', unit_value: ''});
+        },
+        removeIngredient: function (ingredient) {
+            const index = this.form.ingredients.indexOf(ingredient);
+            if (index > -1) {
+                this.form.ingredients.splice(index, 1);
+            }
         },
     },
 }

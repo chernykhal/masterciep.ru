@@ -2,11 +2,11 @@
     <app-layout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Продукты
+                Рецепты
             </h2>
         </template>
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-            <jet-form :type="$page.type">
+            <jet-form :products-list="$page.productsList" :recipe="$page.recipe" :ingredients="$page.ingredients">
             </jet-form>
         </div>
     </app-layout>
@@ -34,7 +34,9 @@ export default {
         JetForm,
     },
     props:{
-        type:Object,
+        productsList:Array,
+        ingredients:Array,
+        recipe:Object,
     },
 }
 </script>

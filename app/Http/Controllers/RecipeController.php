@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreRecipeRequest;
 use App\Models\Product;
 use App\Models\ProductType;
 use App\Models\Recipe;
+use App\Rules\IngredientsRequireRule;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -45,7 +47,7 @@ class RecipeController extends Controller
     public function create()
     {
         $productsList = Product::getList();
-        return Inertia::render('Recipes/Create/Index',['productsList'=>$productsList]);
+        return Inertia::render('Recipes/Create/Index', ['productsList' => $productsList]);
     }
 
 
@@ -57,23 +59,30 @@ class RecipeController extends Controller
     public function store(Request $request)
     {
         $frd = $request->all();
-        dd($frd);
         $validated = Validator::make($frd, [
             'name' => ['required', Rule::unique('recipes')],
             'image' => ['required', 'mimes:jpeg,jpg,png', 'max:1024'],
             'process' => ['required'],
+            'ingredients' => ['required', new IngredientsRequireRule()],
         ])->validateWithBag('storeRecipe');
+        $products = $frd['ingredients'];
         $extension = $request->image->extension();
         $name = \Str::of($validated['name'])->ascii()->slug();
         $request->image->storeAs('/public/recipes/', $name . "." . $extension);
         $url = Storage::url('recipes/' . $name . "." . $extension);
-        $this->recipes->create([
+        $recipe = $this->recipes->create([
             'name' => $frd['name'],
             'video_url' => $frd['video_url'],
             'image_url' => $url,
             'process' => $frd['process'],
             'rating' => $frd['rating'] ?? null,
         ]);
+        foreach ($products as $product) {
+            $recipe->products()->attach($product['product_id'], [
+                'unit_value' => $product['unit_value']
+            ]);
+        }
+
         return back()->with([
             'modal_opened' => false
         ]);
@@ -96,7 +105,9 @@ class RecipeController extends Controller
      */
     public function edit(Recipe $recipe)
     {
-        return Inertia::render('Recipes/Edit/Index', ['recipe' => $recipe]);
+        $ingredients = $recipe->products()->get(['name', 'unit', 'product_id','unit_value'])->toArray();
+        $productsList = Product::getList();
+        return Inertia::render('Recipes/Edit/Index', ['recipe' => $recipe, 'ingredients' => $ingredients, 'productsList' => $productsList]);
     }
 
     /**
@@ -109,21 +120,35 @@ class RecipeController extends Controller
     {
         $frd = $request->all();
         $validated = Validator::make($frd, [
-            'name' => ['required', Rule::unique('recipes')],
-            'image' => ['required', 'mimes:jpeg,jpg,png', 'max:1024'],
+            'name' => ['required', Rule::unique('recipes')->ignore($recipe)],
+            'image' => ['mimes:jpeg,jpg,png', 'max:1024'],
             'process' => ['required'],
+            'ingredients' => ['required', new IngredientsRequireRule()],
         ])->validateWithBag('updateRecipe');
-        $extension = $request->image->extension();
-        $name = \Str::of($validated['name'])->ascii()->slug();
-        $request->image->storeAs('/public/recipes/', $name . "." . $extension);
-        $url = Storage::url('recipes/' . $name . "." . $extension);
+        if ($request->image) {
+            $extension = $request->image->extension();
+            $name = \Str::of($validated['name'])->ascii()->slug();
+            $request->image->storeAs('/public/recipes/', $name . "." . $extension);
+            $url = Storage::url('recipes/' . $name . "." . $extension);
+        } else {
+            $url = $recipe->getImageUrl();
+        }
         $recipe->update([
             'name' => $frd['name'],
             'video_url' => $frd['video_url'],
             'image_url' => $url,
             'process' => $frd['process'],
-            'rating' => $frd['rating'],
+            'rating' => $frd['rating'] ?? null,
         ]);
+
+        $products = $frd['ingredients'];
+        $recipe->products()->detach();
+        foreach ($products as $product) {
+            $recipe->products()->attach($product['product_id'], [
+                'unit_value' => $product['unit_value']
+            ]);
+        }
+
         return back()->with([
             'modal_opened' => false
         ]);
