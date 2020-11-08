@@ -102,12 +102,16 @@ class ProductTypeController extends Controller
         $frd = $request->all();
         $validated = Validator::make($frd, [
             'name' => ['required', Rule::unique('products_types')->ignore($type)],
-            'image' => ['required', 'mimes:jpeg,jpg,png', 'max:1024'],
+            'image' => ['mimes:jpeg,jpg,png', 'max:1024'],
         ])->validateWithBag('updateType');
-        $extension = $request->image->extension();
-        $name = \Str::of($validated['name'])->ascii()->slug();
-        $request->image->storeAs('/public/productType/', $name . "." . $extension);
-        $url = Storage::url('productType/' . $name . "." . $extension);
+        if ($request->image) {
+            $extension = $request->image->extension();
+            $name = \Str::of($validated['name'])->ascii()->slug();
+            $request->image->storeAs('/public/productType/', $name . "." . $extension);
+            $url = Storage::url('productType/' . $name . "." . $extension);
+        } else {
+            $url = $type->getImageUrl();
+        }
         $type->update([
             'name' => $frd['name'],
             'image_url' => $url,
