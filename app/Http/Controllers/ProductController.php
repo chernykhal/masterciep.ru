@@ -155,6 +155,8 @@ class ProductController extends Controller
         $validated = Validator::make($frd, [
             'unit_value' => ['required'],
         ])->validateWithBag('addProduct');
+        $user = \Auth::user();
+        $user->products()->detach($product->getKey());
         $product->user()->attach(\Auth::id(), [
             'unit_value' => $frd['unit_value'],
         ]);
