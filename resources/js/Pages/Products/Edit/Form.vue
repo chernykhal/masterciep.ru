@@ -19,7 +19,7 @@
                 <jet-label for="product_type_id	" value="Тип продукта"/>
                 <div class="relative">
                     <select name="product_type_id"
-                            class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                            class="form-input block appearance-none w-full bg-white border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                             id="product_type_id	" v-model="form.product_type_id">
                         <option v-for="(type, index) in typesList" :key="type" :value="index">{{ type }}</option>
                     </select>
