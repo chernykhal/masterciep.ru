@@ -33,9 +33,10 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $frd = $request->all();
+        $type = $frd['type'] ?? null;
         $frd['search'] = $frd['search'] ?? '';
         $products = $this->products->filter($frd)->orderbyDesc('id')->get()->all();
-        return Inertia::render('Products/Index/Index', ['search' => $frd['search'], 'products' => $products]);
+        return Inertia::render('Products/Index/Index', ['search' => $frd['search'], 'products' => $products,'type'=>$type]);
     }
 
     /**

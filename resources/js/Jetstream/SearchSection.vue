@@ -1,8 +1,8 @@
 <template>
-        <div class="mt-3 md:col-span-2">
+        <div class="mt-3">
             <div class="overflow-hidden">
-                <div class="bg-white sm:p-6">
-                    <div class="sm:px-20 bg-white">
+                <div class="bg-white">
+                    <div class="bg-white">
                         <form @submit.prevent="$emit('submitted')" @change="$emit('changed')" class="w-full">
                             <slot name="form"></slot>
                         </form>

@@ -6,7 +6,7 @@
             </h2>
         </template>
         <h2 class="font-semibold text-xl text-gray-800 leading-tight text-center my-5">Добавьте свои продукты</h2>
-        <div class="max-w-7xl mx-auto">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-3">
             <jet-search-section>
                 <template #form>
                     <div class="flex items-center py-2 relative search-container mx-9">
@@ -18,7 +18,7 @@
                 </template>
             </jet-search-section>
         </div>
-        <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-3">
             <jet-products-types-list :types="$page.types"/>
         </div>
     </app-layout>
