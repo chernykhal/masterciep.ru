@@ -65,7 +65,7 @@
                             <jet-input-error :message="form.error('product_id')" class="mt-2"/>
                         </div>
                         <div class="flex-1 ml-4">
-                            <jet-input type="text"
+                            <jet-input type="number"
                                        class="block w-full border-r-0 border-t-0 border-l-0 border-r-0 unit_input text-center"
                                        v-model="ingredient.unit_value"/>
                             <jet-input-error :message="form.error('unit_value')" class="mt-2"/>
