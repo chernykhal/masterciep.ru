@@ -36,7 +36,7 @@ class ProductController extends Controller
         $type = $frd['type'] ?? null;
         $frd['search'] = $frd['search'] ?? '';
         $products = $this->products->filter($frd)->orderbyDesc('id')->get()->all();
-        return Inertia::render('Products/Index/Index', ['search' => $frd['search'], 'products' => $products,'type'=>$type]);
+        return Inertia::render('Products/Index/Index', ['search' => $frd['search'], 'products' => $products, 'type' => $type]);
     }
 
     /**
@@ -95,7 +95,7 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $typesList = ProductType::getList();
-        return Inertia::render('Products/Edit/Index', ['product' => $product, 'typesList' => $typesList,'modal_opened' => true]);
+        return Inertia::render('Products/Edit/Index', ['product' => $product, 'typesList' => $typesList, 'modal_opened' => true]);
     }
 
     /**
@@ -141,5 +141,71 @@ class ProductController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * @param Request $request
+     * @param Product $product
+     * @return RedirectResponse
+     * @throws ValidationException
+     */
+    public function add(Request $request, Product $product)
+    {
+        $frd = $request->all();
+        $validated = Validator::make($frd, [
+            'unit_value' => ['required'],
+        ])->validateWithBag('addProduct');
+        $product->user()->attach(\Auth::id(), [
+            'unit_value' => $frd['unit_value'],
+        ]);
+        return back()->with([
+            'modal_opened' => false
+        ]);
+    }
+
+    public function usersProductsIndex(Request $request)
+    {
+        $frd = $request->all();
+        $frd['search'] = $frd['search'] ?? '';
+        $user = \Auth::user();
+//        $products = $this->products->filter($frd)->orderbyDesc('id')->get()->all();
+
+//        $products = $this->products->userFilter()->filter($frd)->withAggregate('user','unit_value')->get()->toArray();
+        $products = $user->products()->get(['name', 'image_url', 'unit_value', 'unit', 'product_id']);
+//        if ($frd['search']){
+//            $products->filter(function ($value, $key) use ($frd) {
+//                return stristr($value->getName(), $frd['search']);
+//            });
+//        }
+        $products = $products->toArray();
+        return Inertia::render('Products/User/Index/Index', ['search' => $frd['search'], 'products' => $products]);
+    }
+
+    /**
+     * @param Product $product
+     */
+    public function usersProductsDestroy(Product $product)
+    {
+        $user = \Auth::user();
+        $user->products()->detach($product->getKey());
+        return back()->with([
+            'modal_opened' => false
+        ]);
+    }
+
+    public function usersProductsUpdate(Request $request, Product $product)
+    {
+        $frd = $request->all();
+        $validated = Validator::make($frd, [
+            'unit_value' => ['required'],
+        ])->validateWithBag('updateProduct');
+        $user = \Auth::user();
+        $user->products()->detach($product->getKey());
+        $product->user()->attach(\Auth::id(), [
+            'unit_value' => $frd['unit_value'],
+        ]);
+        return back()->with([
+            'modal_opened' => false
+        ]);
     }
 }

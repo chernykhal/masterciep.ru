@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Http\Request;
 
 /**
  * App\Models\Product
@@ -34,6 +35,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read \App\Models\ProductType $type
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User[] $user
  * @property-read int|null $user_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Recipe[] $recipes
+ * @property-read int|null $recipes_count
+ * @method static Builder|Product userFilter()
  */
 class Product extends Model
 {
@@ -48,7 +52,7 @@ class Product extends Model
 
     public static function getList()
     {
-        return self::select(['id', 'name','unit'])
+        return self::select(['id', 'name', 'unit'])
             ->orderbyDesc('id')->get()
             ->toArray();
     }
@@ -80,6 +84,13 @@ class Product extends Model
             }
         }
         return $query;
+    }
+
+    public function scopeUserFilter(Builder $query): Builder
+    {
+        return $query->whereHas('user', static function (Builder $query): Builder {
+            return $query->where('user_id', \Auth::id());
+        });
     }
 
     /**
@@ -149,21 +160,23 @@ class Product extends Model
     /**
      * @return BelongsTo
      */
-    public function type():BelongsTo
+    public function type(): BelongsTo
     {
-        return $this->belongsTo(ProductType::class,'product_type_id');
+        return $this->belongsTo(ProductType::class, 'product_type_id');
     }
 
-    public function user():BelongsToMany
+    public function user(): BelongsToMany
     {
-        return $this->belongsToMany(User::class,'users_products');
+        return $this->belongsToMany(User::class, 'users_products', 'product_id', 'user_id')->withPivot('unit_value');
     }
 
     /**
      * @return BelongsToMany
      */
-    public function recipes():BelongsToMany
+    public function recipes(): BelongsToMany
     {
-        return $this->belongsToMany(Recipe::class,'recipes_products','product_id','recipe_id');
+        return $this->belongsToMany(Recipe::class, 'recipes_products', 'product_id', 'recipe_id');
     }
+
+
 }

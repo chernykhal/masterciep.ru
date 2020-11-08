@@ -20,6 +20,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::put('products/store', [ProductController::class, 'store'])->name('products.store');
+Route::get('my/products', [ProductController::class, 'usersProductsIndex'])->name('my.products');
+Route::post('my/products/{product}', [ProductController::class, 'usersProductsUpdate'])->name('my.products.update');
+Route::post('my/products/{product}/destroy', [ProductController::class, 'usersProductsDestroy'])->name('my.products.destroy');
+Route::post('products/{product}/add', [ProductController::class, 'add'])->name('products.add');
 Route::resource('products', ProductController::class)->except('store');
 
 Route::put('recipes/store', [RecipeController::class, 'store'])->name('recipes.store');

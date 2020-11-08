@@ -32,6 +32,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereVideoUrl($value)
  * @method static Builder|Recipe filter($frd)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Product[] $products
+ * @property-read int|null $products_count
  */
 class Recipe extends Model
 {
