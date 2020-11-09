@@ -63,7 +63,7 @@ class RecipeController extends Controller
         $frd = $request->all();
         $validated = Validator::make($frd, [
             'name' => ['required', Rule::unique('recipes')],
-            'image' => ['required', 'mimes:jpeg,jpg,png', 'max:1024'],
+            'image' => ['required', 'mimes:jpeg,jpg,png,webp', 'max:1024'],
             'process' => ['required'],
             'ingredients' => ['required', new IngredientsRequireRule()],
         ])->validateWithBag('storeRecipe');
@@ -123,7 +123,7 @@ class RecipeController extends Controller
         $frd = $request->all();
         $validated = Validator::make($frd, [
             'name' => ['required', Rule::unique('recipes')->ignore($recipe)],
-            'image' => ['mimes:jpeg,jpg,png', 'max:1024'],
+            'image' => ['mimes:jpeg,jpg,png,webp', 'max:1024'],
             'process' => ['required'],
             'ingredients' => ['required', new IngredientsRequireRule()],
         ])->validateWithBag('updateRecipe');

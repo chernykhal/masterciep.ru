@@ -56,7 +56,7 @@ class ProductTypeController extends Controller
         $frd = $request->all();
         $validated = Validator::make($frd, [
             'name' => ['required', Rule::unique('products_types')],
-            'image' => ['required', 'mimes:jpeg,jpg,png', 'max:1024'],
+            'image' => ['required', 'mimes:jpeg,jpg,png,webp', 'max:1024'],
         ])->validateWithBag('storeType');
         $extension = $request->image->extension();
         $name = \Str::of($validated['name'])->ascii()->slug();
@@ -102,7 +102,7 @@ class ProductTypeController extends Controller
         $frd = $request->all();
         $validated = Validator::make($frd, [
             'name' => ['required', Rule::unique('products_types')->ignore($type)],
-            'image' => ['mimes:jpeg,jpg,png', 'max:1024'],
+            'image' => ['mimes:jpeg,jpg,png,webp', 'max:1024'],
         ])->validateWithBag('updateType');
         if ($request->image) {
             $extension = $request->image->extension();

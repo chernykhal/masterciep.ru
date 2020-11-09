@@ -60,7 +60,7 @@ class ProductController extends Controller
         $validated = Validator::make($frd, [
             'name' => ['required', Rule::unique('products')],
             'unit' => ['required'],
-            'image' => ['required', 'mimes:jpeg,jpg,png', 'max:1024'],
+            'image' => ['required', 'mimes:jpeg,jpg,png,webp', 'max:1024'],
             'product_type_id' => ['required'],
         ])->validateWithBag('storeProduct');
         $extension = $request->image->extension();
@@ -110,7 +110,7 @@ class ProductController extends Controller
         $validated = Validator::make($frd, [
             'name' => ['required', Rule::unique('products')->ignore($product)],
             'unit' => ['required'],
-            'image' => ['mimes:jpeg,jpg,png', 'max:1024'],
+            'image' => ['mimes:jpeg,jpg,png,webp', 'max:1024'],
             'product_type_id' => ['required'],
         ])->validateWithBag('updateProduct');
 
