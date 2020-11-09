@@ -38,7 +38,7 @@
                 </inertia-link>
             </div>
 
-            <div class="p-6 border-t border-gray-200 bg-gray-100">
+            <div class="p-6 border-t border-gray-200 ">
                 <inertia-link :href="route('types.index')">
                     <div class="flex items-center">
                         <svg class="w-8 h-8 text-gray-400" viewBox="0 0 19 19" fill="none"
@@ -53,7 +53,7 @@
                 </inertia-link>
             </div>
 
-            <div class="p-6 border-t border-gray-200 md:border-l bg-gray-100">
+            <div class="p-6 border-t border-gray-200 md:border-l ">
                 <inertia-link :href="route('recipes.index')">
                     <div class="flex items-center">
                         <svg class="w-8 h-8 text-gray-400" viewBox="0 0 44 44" fill="none"
