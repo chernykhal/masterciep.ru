@@ -26,7 +26,7 @@ class CreateRecipesTable extends Migration
             $table->id();
             $table->foreignId('recipe_id')->constrained('recipes');
             $table->foreignId('product_id')->constrained('products');
-            $table->integer('unit_value');
+            $table->float('unit_value');
             $table->timestamps();
         });
         Schema::create('users_recipes', function (Blueprint $table) {

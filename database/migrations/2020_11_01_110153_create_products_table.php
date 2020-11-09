@@ -31,7 +31,7 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('product_id')->constrained('products');
-            $table->integer('unit_value');
+            $table->float('unit_value');
             $table->timestamps();
         });
     }
