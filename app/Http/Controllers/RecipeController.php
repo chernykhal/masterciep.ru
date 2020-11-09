@@ -9,12 +9,14 @@ use App\Models\Recipe;
 use App\Rules\IngredientsRequireRule;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
+use function GuzzleHttp\Psr7\str;
 
 class RecipeController extends Controller
 {
@@ -105,7 +107,7 @@ class RecipeController extends Controller
      */
     public function edit(Recipe $recipe)
     {
-        $ingredients = $recipe->products()->get(['name', 'unit', 'product_id','unit_value'])->toArray();
+        $ingredients = $recipe->products()->get(['name', 'unit', 'product_id', 'unit_value'])->toArray();
         $productsList = Product::getList();
         return Inertia::render('Recipes/Edit/Index', ['recipe' => $recipe, 'ingredients' => $ingredients, 'productsList' => $productsList]);
     }
@@ -163,5 +165,70 @@ class RecipeController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    public function usersRecipesIndex(Request $request)
+    {
+        $frd = $request->all();
+        $frd['search'] = $frd['search'] ?? '';
+        $user = Auth::getUser();
+        $userProducts = $user->products;
+        $recipes = $this->recipes->with('products')->filter($frd)->get();
+
+        foreach ($recipes as $recipe) {
+            $recipeProducts = $recipe->products;
+            $recipeProductsCount = $recipeProducts->count();
+            $recipeDiffScore = 0;
+            foreach ($recipeProducts as $recipeProduct) {
+                foreach ($userProducts as $userProduct) {
+                    if ($userProduct->pivot->product_id === $recipeProduct->pivot->product_id) {
+                        if ($userProduct->pivot->unit_value >= $recipeProduct->pivot->unit_value) {
+                            $recipeDiffScore++;
+                        }
+                    }
+                }
+            }
+            if ($recipeDiffScore === $recipeProductsCount) {
+                $availableRecipes[] = $recipe;
+            } else {
+                $availableRecipes = [];
+            }
+        }
+        foreach ($availableRecipes as $recipe) {
+            $recipe['process'] = explode("\n", $recipe['process']);
+        }
+
+        return Inertia::render('Recipes/User/Index/Index', ['search' => $frd['search'], 'recipes' => $availableRecipes ?? null]);
+    }
+
+    /**
+     * @param Recipe $recipe
+     */
+    public function cook(Recipe $recipe)
+    {
+        $user = Auth::getUser();
+        $user->recipes()->attach($recipe);
+
+        $userProducts = $user->products;
+        $recipeProducts = $recipe->products()->get();
+        foreach ($recipeProducts as $recipeProduct) {
+            foreach ($userProducts as $userProduct) {
+                if ($userProduct->pivot->product_id === $recipeProduct->pivot->product_id) {
+                    if ($userProduct->pivot->unit_value >= $recipeProduct->pivot->unit_value) {
+                        $unitValue = $userProduct->pivot->unit_value - $recipeProduct->pivot->unit_value;
+                        $user->products()->detach($userProduct);
+                        $userProduct->user()->attach(\Auth::id(), [
+                            'unit_value' => $unitValue,
+                        ]);
+                    }
+                }
+            }
+        }
+        $recipe['process'] = explode("\n", $recipe['process']);
+        return Inertia::render('Recipes/Show/Index', ['recipe' => $recipe]);
     }
 }

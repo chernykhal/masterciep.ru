@@ -100,4 +100,8 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Product::class, 'users_products', 'user_id', 'product_id')->withPivot('unit_value');
     }
+    public function recipes(): BelongsToMany
+    {
+        return $this->belongsToMany(Recipe::class, 'users_recipes', 'user_id', 'recipe_id');
+    }
 }

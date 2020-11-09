@@ -7,3 +7,17 @@
     margin-bottom: 17px;
 }
 
+ul{
+    list-style: none;
+}
+ul li::before {
+    content: "";
+    color: #10B42B;
+    background-color: #10B42B;
+    font-weight: bold;
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-right: 8px;
+    border-radius: 100px;
+}

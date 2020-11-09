@@ -27,6 +27,8 @@ Route::post('products/{product}/add', [ProductController::class, 'add'])->name('
 Route::resource('products', ProductController::class)->except('store');
 
 Route::put('recipes/store', [RecipeController::class, 'store'])->name('recipes.store');
+Route::get('my/recipes/', [RecipeController::class, 'usersRecipesIndex'])->name('my.recipes');
+Route::post('my/recipes/{recipe}/', [RecipeController::class, 'cook'])->name('my.recipes.cook');
 Route::resource('recipes', RecipeController::class)->except('store');
 
 Route::put('types/store', [ProductTypeController::class, 'store'])->name('types.store');

@@ -149,12 +149,19 @@ class Recipe extends Model
         return $query;
     }
 
+    public function scopeUserFilter(Builder $query): Builder
+    {
+        return $query->whereHas('products', static function (Builder $query): Builder {
+            return $query->where('user_id', \Auth::id());
+        });
+    }
+
     /**
      * @return BelongsToMany
      */
     public function products():BelongsToMany
     {
-        return $this->belongsToMany(Product::class,'recipes_products','recipe_id','product_id');
+        return $this->belongsToMany(Product::class,'recipes_products','recipe_id','product_id')->withPivot('unit_value');
     }
 
 
