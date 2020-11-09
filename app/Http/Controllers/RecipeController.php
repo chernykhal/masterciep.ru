@@ -211,11 +211,9 @@ class RecipeController extends Controller
     public function cook(Request $request, Recipe $recipe)
     {
         $frd = $request->all();
-//        dd($frd);
         if ($frd['product_waste'] ?? null) {
             $user = Auth::getUser();
             $user->recipes()->attach($recipe);
-
             $userProducts = $user->products;
             $recipeProducts = $recipe->products()->get();
             foreach ($recipeProducts as $recipeProduct) {
