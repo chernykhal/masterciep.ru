@@ -6,7 +6,7 @@
             </h2>
         </template>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-3">
-            <jet-show :recipe="$page.recipe"/>
+            <jet-show :recipe="$page.recipe" :products="$page.products" :product_waste="$page.product_waste"/>
         </div>
     </app-layout>
 </template>
@@ -40,6 +40,8 @@ export default {
     },
     props: {
         'recipe': Object,
+        'products': Array,
+        'product_waste': Boolean,
     },
 }
 </script>

@@ -208,27 +208,33 @@ class RecipeController extends Controller
     /**
      * @param Recipe $recipe
      */
-    public function cook(Recipe $recipe)
+    public function cook(Request $request, Recipe $recipe)
     {
-        $user = Auth::getUser();
-        $user->recipes()->attach($recipe);
+        $frd = $request->all();
+//        dd($frd);
+        if ($frd['product_waste'] ?? null) {
+            $user = Auth::getUser();
+            $user->recipes()->attach($recipe);
 
-        $userProducts = $user->products;
-        $recipeProducts = $recipe->products()->get();
-        foreach ($recipeProducts as $recipeProduct) {
-            foreach ($userProducts as $userProduct) {
-                if ($userProduct->pivot->product_id === $recipeProduct->pivot->product_id) {
-                    if ($userProduct->pivot->unit_value >= $recipeProduct->pivot->unit_value) {
-                        $unitValue = $userProduct->pivot->unit_value - $recipeProduct->pivot->unit_value;
-                        $user->products()->detach($userProduct);
-                        $userProduct->user()->attach(\Auth::id(), [
-                            'unit_value' => $unitValue,
-                        ]);
+            $userProducts = $user->products;
+            $recipeProducts = $recipe->products()->get();
+            foreach ($recipeProducts as $recipeProduct) {
+                foreach ($userProducts as $userProduct) {
+                    if ($userProduct->pivot->product_id === $recipeProduct->pivot->product_id) {
+                        if ($userProduct->pivot->unit_value >= $recipeProduct->pivot->unit_value) {
+                            $unitValue = $userProduct->pivot->unit_value - $recipeProduct->pivot->unit_value;
+                            $user->products()->detach($userProduct);
+                            $userProduct->user()->attach(\Auth::id(), [
+                                'unit_value' => $unitValue,
+                            ]);
+                        }
                     }
                 }
             }
         }
+
         $recipe['process'] = explode("\n", $recipe['process']);
-        return Inertia::render('Recipes/Show/Index', ['recipe' => $recipe]);
+        $products = $recipe->products()->get();
+        return Inertia::render('Recipes/Show/Index', ['recipe' => $recipe, 'products' => $products, 'product_waste' => $frd['product_waste'] ?? null]);
     }
 }

@@ -28,12 +28,12 @@
             <jet-recipe-modal :show="opened===recipe"
                               @close="opened = false">
                 <template #video>
-<!--                    <div class="w-full">-->
-<!--                        <iframe v-if="recipe.video_url" width="100%" height="300px" :src="recipe.video_url"-->
-<!--                                frameborder="0"-->
-<!--                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"-->
-<!--                                allowfullscreen></iframe>-->
-<!--                    </div>-->
+                    <!--                    <div class="w-full">-->
+                    <!--                        <iframe v-if="recipe.video_url" width="100%" height="300px" :src="recipe.video_url"-->
+                    <!--                                frameborder="0"-->
+                    <!--                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"-->
+                    <!--                                allowfullscreen></iframe>-->
+                    <!--                    </div>-->
                 </template>
 
                 <template #content>
@@ -110,11 +110,10 @@ export default {
         return {
             opened: false,
             form: this.$inertia.form({
-                '_method': 'POST',
+                '_method': 'GET',
                 unit_value: '',
                 recipe_id: '',
-            }, {
-                bag: 'cookRecipe'
+                product_waste: null,
             }),
         }
     },
@@ -127,7 +126,8 @@ export default {
         },
         cook(recipe) {
             this.form.recipe_id = recipe.recipe_id;
-            this.form.post(route('my.recipes.cook', recipe), {
+            this.form.product_waste = true;
+            this.form.post(route('my.recipes.cook', recipe.id), {
                 preserveScroll: true
             })
         },

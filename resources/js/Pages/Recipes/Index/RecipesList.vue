@@ -7,7 +7,7 @@
                 <div class="self-center">
                     {{ recipe.name }}
                 </div>
-                <inertia-link :href="route('recipes.edit', recipe)" title="Приготовить"
+                <inertia-link :href="route('my.recipes.cook', recipe)" title="Приготовить"
                               class="self-center inline-flex bg-white tracking-widest focus:border-blue-300 pr-3">
                     <svg class="w-6 h-6" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="9.5" cy="9.5" r="9" fill="white" stroke="#10B42B"/>

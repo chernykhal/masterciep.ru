@@ -1,22 +1,23 @@
 <template>
     <div class="mx-9 mt-6">
         <div class="w-full flex flex-wrap">
-            <div class="w-full md:w-1/2 md:px-3 ">
-                    <iframe v-if="recipe.video_url" width="100%" height="100%" :src="recipe.video_url"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen></iframe>
+            <div v-if="recipe.video_url" class="w-full md:w-1/2 md:px-3 ">
+                <iframe width="100%" height="100%" :src="recipe.video_url"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
             </div>
             <div class="w-full md:w-1/2 md:px-3 ">
                 <div class="title text-2xl mt-2 md:mt-0">
                     {{ recipe.name }}
+
                 </div>
                 <div class="mt-5">
                     <div class="title text-xl mb-2">
                         Ингредиенты
                     </div>
                     <ul class="text-gray-600">
-                        <li v-for="product in recipe.products" :key="product.id">{{ product.name }} -
+                        <li v-for="product in products" :key="product.id">{{ product.name }} -
                             {{ product.pivot.unit_value }} {{ product.unit }}
                         </li>
                     </ul>
@@ -31,10 +32,17 @@
                 </div>
             </div>
         </div>
-        <div class="text-center">
-            <inertia-link :href="route('my.recipes')" class=" mt-7 btn-primary inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-600 transition ease-in-out duration-150" title="Перейти к рецептам">
+        <div class="text-center gap-3">
+            <inertia-link :href="route('my.recipes')"
+                          class=" mt-7 btn-primary inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-600 transition ease-in-out duration-150"
+                          title="Перейти к рецептам">
                 Еще рецепты
             </inertia-link>
+            <button v-if="!product_waste" @click="cook(recipe)" :href="route('my.recipes')"
+                    class=" mt-7 btn-secondary inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-600 transition ease-in-out duration-150"
+                    title="Перейти к рецептам">
+                Приготовлено
+            </button>
         </div>
     </div>
 </template>
@@ -63,6 +71,25 @@ export default {
         JetSecondaryButton,
         // JetPagination
     },
-    props: ['recipe'],
+    props: ['recipe', 'products', 'product_waste'],
+    data() {
+        return {
+            form: this.$inertia.form({
+                '_method': 'GET',
+                unit_value: '',
+                recipe_id: '',
+                product_waste: null,
+            }),
+        }
+    },
+    methods: {
+        cook(recipe) {
+            this.form.recipe_id = recipe.recipe_id;
+            this.form.product_waste = true;
+            this.form.post(route('my.recipes.cook', recipe.id), {
+                preserveScroll: true
+            })
+        },
+    },
 }
 </script>
