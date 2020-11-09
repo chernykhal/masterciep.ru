@@ -198,11 +198,11 @@ class RecipeController extends Controller
                 $availableRecipes = [];
             }
         }
+        $availableRecipes = $availableRecipes ?? [];
         foreach ($availableRecipes as $recipe) {
             $recipe['process'] = explode("\n", $recipe['process']);
         }
-
-        return Inertia::render('Recipes/User/Index/Index', ['search' => $frd['search'], 'recipes' => $availableRecipes ?? null]);
+        return Inertia::render('Recipes/User/Index/Index', ['search' => $frd['search'], 'recipes' => $availableRecipes]);
     }
 
     /**
