@@ -25,6 +25,16 @@
         </div>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-3">
             <jet-products-list :products="$page.products"/>
+            <div class="text-center mt-4">
+                <inertia-link :href="route('types.index')" title="Перейти к списку продуктов">
+                    <u style="color: #10B42B;">Добавьте</u>
+                </inertia-link>
+                еще продукты или
+                <a href="https://sbermarket.ru/" title="Перейти в Сбермаркет">
+                    <u style="color: #10B42B;">закажите</u>
+                </a>
+                их, чтобы приготовить больше вкусненького :)
+            </div>
         </div>
     </app-layout>
 </template>

@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\ProductType;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
@@ -155,7 +156,7 @@ class ProductController extends Controller
         $validated = Validator::make($frd, [
             'unit_value' => ['required'],
         ])->validateWithBag('addProduct');
-        $user = \Auth::user();
+        $user = \Auth::getUser();
         $user->products()->detach($product->getKey());
         $product->user()->attach(\Auth::id(), [
             'unit_value' => $frd['unit_value'],
@@ -165,21 +166,17 @@ class ProductController extends Controller
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @return Response
+     */
     public function usersProductsIndex(Request $request)
     {
         $frd = $request->all();
         $frd['search'] = $frd['search'] ?? '';
-        $user = \Auth::user();
-//        $products = $this->products->filter($frd)->orderbyDesc('id')->get()->all();
+        $user = Auth::getUser();
+        $products = $user->products()->filter($frd)->get()->toArray();
 
-//        $products = $this->products->userFilter()->filter($frd)->withAggregate('user','unit_value')->get()->toArray();
-        $products = $user->products()->get(['name', 'image_url', 'unit_value', 'unit', 'product_id']);
-//        if ($frd['search']){
-//            $products->filter(function ($value, $key) use ($frd) {
-//                return stristr($value->getName(), $frd['search']);
-//            });
-//        }
-        $products = $products->toArray();
         return Inertia::render('Products/User/Index/Index', ['search' => $frd['search'], 'products' => $products]);
     }
 
@@ -188,7 +185,7 @@ class ProductController extends Controller
      */
     public function usersProductsDestroy(Product $product)
     {
-        $user = \Auth::user();
+        $user = \Auth::getUser();
         $user->products()->detach($product->getKey());
         return back()->with([
             'modal_opened' => false
@@ -201,7 +198,7 @@ class ProductController extends Controller
         $validated = Validator::make($frd, [
             'unit_value' => ['required'],
         ])->validateWithBag('updateProduct');
-        $user = \Auth::user();
+        $user = \Auth::getUser();
         $user->products()->detach($product->getKey());
         $product->user()->attach(\Auth::id(), [
             'unit_value' => $frd['unit_value'],

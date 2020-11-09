@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Http\Request;
 
 /**
  * App\Models\Product
@@ -67,7 +65,7 @@ class Product extends Model
                 case 'search':
                     {
                         $query->where(function (Builder $query) use ($value): Builder {
-                            return $query->orWhere('id', $value)
+                            return $query
                                 ->orWhere('name', 'like', '%' . $value . '%')
                                 ->orWhere('product_type_id', $value);
                         });
@@ -167,7 +165,8 @@ class Product extends Model
 
     public function user(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'users_products', 'product_id', 'user_id')->withPivot('unit_value');
+        return $this->belongsToMany(User::class, 'users_products', 'product_id', 'user_id')
+            ->withPivot('unit_value');
     }
 
     /**
@@ -175,8 +174,6 @@ class Product extends Model
      */
     public function recipes(): BelongsToMany
     {
-        return $this->belongsToMany(Recipe::class, 'recipes_products', 'product_id', 'recipe_id');
+        return $this->belongsToMany(Recipe::class, 'recipes_products', 'product_id', 'recipe_id')->withPivot('unit_value');
     }
-
-
 }

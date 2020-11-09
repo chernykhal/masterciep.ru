@@ -27,7 +27,7 @@
                     </button>
                 </div>
 
-                <jet-dialog-modal :show="opened===product.product_id"
+                <jet-dialog-modal :show="opened===product"
                                   @close="opened = false">
                     <template #title>
                         Подтверждение
@@ -38,7 +38,7 @@
 
                         <div class="mt-4">
                             <jet-input type="number" class="mt-1 block w-full" :placeholder="product.unit"
-                                       @keyup.enter.native="updateProduct(product)" :value="product.unit_value"
+                                       @keyup.enter.native="updateProduct(product)" :value="product.pivot.unit_value"
                                        v-model="form.unit_value"/>
 
                             <jet-input-error :message="form.error('unit_value')"
@@ -106,21 +106,21 @@ export default {
     methods: {
         openModal(product) {
             this.form.unit_value = '';
-            this.opened = product.product_id;
-            this.form.unit_value = product.unit_value;
+            this.opened = product;
+            this.form.unit_value = product.pivot.unit_value;
         },
         closeModal() {
             this.opened = false;
         },
         updateProduct(product) {
             this.form.product_id = product.product_id;
-            this.form.post(route('my.products.update', product.product_id), {
+            this.form.post(route('my.products.update', product), {
                 preserveScroll: true
             })
         },
         removeProduct(product){
             this.form.product_id = product.product_id;
-            this.form.post(route('my.products.destroy', product.product_id), {
+            this.form.post(route('my.products.destroy', product), {
                 preserveScroll: true
             })
             const index = this.products.indexOf(product);
