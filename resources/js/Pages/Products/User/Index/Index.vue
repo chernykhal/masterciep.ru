@@ -5,7 +5,7 @@
                 Продукты
             </h2>
         </template>
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight text-center my-5">Ваши продукты</h2>
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight text-center my-5">Мои продукты</h2>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-3">
             <jet-search-section>
                 <template #form>
@@ -25,7 +25,7 @@
         </div>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-3">
             <jet-products-list :products="$page.products"/>
-            <div class="text-center mt-4">
+            <div class="text-center mt-4 mx-9">
                 <inertia-link :href="route('types.index')" title="Перейти к списку продуктов">
                     <u style="color: #10B42B;">Добавьте</u>
                 </inertia-link>

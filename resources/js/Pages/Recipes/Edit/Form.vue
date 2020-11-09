@@ -3,7 +3,9 @@
         <template #title>
             Изменить информацию о рецепте
         </template>
-
+        <template #description>
+            Измените информацию о рецепте в базе
+        </template>
         <template #form>
             <div class="col-span-6 sm:col-span-4">
                 <jet-label for="name" value="Название"/>

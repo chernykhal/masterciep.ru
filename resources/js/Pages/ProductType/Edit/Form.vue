@@ -1,9 +1,11 @@
 <template>
     <jet-form-section @submitted="updateType">
         <template #title>
-            Изменить информацию о типе продукта
+            Изменить информацию о категории продуктов
         </template>
-
+        <template #description>
+            Измените категорию продуктов в базе
+        </template>
         <template #form>
             <div class="col-span-6 sm:col-span-4">
                 <jet-label for="name" value="Название"/>

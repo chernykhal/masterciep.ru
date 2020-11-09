@@ -25,7 +25,7 @@
         </div>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-3">
             <jet-recipes-list :recipes="$page.recipes"/>
-            <div class="text-center mt-4">
+            <div class="text-center mt-4 mx-9">
                 <inertia-link :href="route('types.index')" title="Перейти к списку продуктов">
                     <u style="color: #10B42B;">Добавьте</u>
                 </inertia-link>

@@ -1,7 +1,7 @@
 <template>
     <jet-form-section @submitted="createProduct">
         <template #title>
-            Добавьте новый продукт
+            Добавить новый продукт
         </template>
         <template #description>
             Добавьте новый продукт в базу

@@ -55,7 +55,7 @@
                 immediate: true,
                 handler: (show) => {
                     if (show) {
-                        document.body.style.overflow = 'hidden'
+                        // document.body.style.overflow = 'hidden'
                     } else {
                         document.body.style.overflow = null
                     }

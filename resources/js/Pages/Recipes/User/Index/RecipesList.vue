@@ -4,7 +4,7 @@
             <div class="list-item list-item__margins flex flex-row justify-between">
                 <img :src="recipe.image_url" :alt="recipe.name"
                      class="h-10 w-10 md:h-20 md:w-20 object-cover self-center">
-                <div class="self-center">
+                <div class="self-center ml-2 md:ml-0">
                     {{ recipe.name }}
                 </div>
                 <button @click="openModal(recipe)" title="Приготовить"

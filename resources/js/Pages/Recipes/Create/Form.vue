@@ -1,7 +1,7 @@
 <template>
     <jet-form-section @submitted="createRecipe">
         <template #title>
-            Добавьте новый рецепт
+            Добавить новый рецепт
         </template>
         <template #description>
             Добавьте новый рецепт в базу

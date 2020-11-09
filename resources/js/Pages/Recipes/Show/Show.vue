@@ -64,8 +64,5 @@ export default {
         // JetPagination
     },
     props: ['recipe'],
-    mounted() {
-        console.log(recipe)
-    }
 }
 </script>

@@ -1,10 +1,10 @@
 <template>
     <jet-form-section @submitted="createProductType">
         <template #title>
-            Добавьте новый продукт
+            Добавить новую категорию продуктов
         </template>
         <template #description>
-            Добавьте новый продукт в базу
+            Добавьте новую категорию продуктов в базу
         </template>
 
         <template #form>
