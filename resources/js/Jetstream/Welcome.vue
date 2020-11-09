@@ -1,104 +1,84 @@
 <template>
     <div>
-        <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
-            <div>
-                <jet-application-logo class="block h-12 w-auto" />
-            </div>
-
-            <div class="mt-8 text-2xl">
-                Welcome to your Jetstream application!
-            </div>
-
-            <div class="mt-6 text-gray-500">
-                Laravel Jetstream provides a beautiful, robust starting point for your next Laravel application. Laravel is designed
-                to help you build your application using a development environment that is simple, powerful, and enjoyable. We believe
-                you should love expressing your creativity through programming, so we have spent time carefully crafting the Laravel
-                ecosystem to be a breath of fresh air. We hope you love it.
-            </div>
-        </div>
-
-        <div class="bg-gray-200 bg-opacity-25 grid grid-cols-1 md:grid-cols-2">
+        <div class="bg-opacity-25 grid grid-cols-1 md:grid-cols-2">
             <div class="p-6">
-                <div class="flex items-center">
-                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-400"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                    <div class="ml-4 text-lg text-gray-600 leading-7 font-semibold"><a href="https://laravel.com/docs">Documentation</a></div>
-                </div>
-
-                <div class="ml-12">
-                    <div class="mt-2 text-sm text-gray-500">
-                        Laravel has wonderful documentation covering every aspect of the framework. Whether you're new to the framework or have previous experience, we recommend reading all of the documentation from beginning to end.
-                    </div>
-
-                    <a href="https://laravel.com/docs">
-                        <div class="mt-3 flex items-center text-sm font-semibold text-indigo-700">
-                                <div>Explore the documentation</div>
-
-                                <div class="ml-1 text-indigo-500">
-                                    <svg viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                                </div>
+                <inertia-link :href="route('my.products')">
+                    <div class="flex items-center">
+                        <svg class="w-8 h-8" viewBox="0 0 43 43" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M31.5781 1.34375H11.4219C10.3531 1.34495 9.32842 1.77006 8.57268 2.5258C7.81693 3.28155 7.39183 4.30621 7.39062 5.375V38.9688C7.39143 39.6813 7.67483 40.3644 8.17866 40.8682C8.68249 41.372 9.3656 41.6554 10.0781 41.6562H32.9219C33.6344 41.6554 34.3175 41.372 34.8213 40.8682C35.3252 40.3644 35.6086 39.6813 35.6094 38.9688V5.375C35.6082 4.30621 35.1831 3.28155 34.4273 2.5258C33.6716 1.77006 32.6469 1.34495 31.5781 1.34375ZM32.9219 38.9688H10.0781V20.1562H32.9219V38.9688ZM32.9219 17.4688H10.0781V5.375C10.0785 5.01874 10.2203 4.6772 10.4722 4.42529C10.7241 4.17338 11.0656 4.03167 11.4219 4.03125H31.5781C31.9344 4.03167 32.2759 4.17338 32.5278 4.42529C32.7797 4.6772 32.9215 5.01874 32.9219 5.375V17.4688Z"
+                                fill="#10B42B"/>
+                            <path d="M12.0938 23.5156H14.7812V31.5781H12.0938V23.5156Z" fill="#10B42B"/>
+                            <path d="M12.0938 8.73438H14.7812V14.1094H12.0938V8.73438Z" fill="#10B42B"/>
+                        </svg>
+                        <div class="ml-4 text-lg text-gray-600 leading-7 font-semibold">Мой
+                            холодильник
                         </div>
-                    </a>
-                </div>
+                    </div>
+                </inertia-link>
             </div>
 
-            <div class="p-6 border-t border-gray-200 md:border-t-0 md:border-l">
-                <div class="flex items-center">
-                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-400"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                    <div class="ml-4 text-lg text-gray-600 leading-7 font-semibold"><a href="https://laracasts.com">Laracasts</a></div>
-                </div>
+            <div class="p-6  border-t border-gray-200 md:border-t-0 md:border-l">
+                <inertia-link :href="route('my.recipes')">
+                    <div class="flex items-center">
+                        <svg class="w-8 h-8 text-gray-400" viewBox="0 0 44 44" fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M38.5 20.1667H33V7.33333C33 6.8471 32.8068 6.38079 32.463 6.03697C32.1192 5.69315 31.6529 5.5 31.1666 5.5H5.49996C5.01373 5.5 4.54741 5.69315 4.2036 6.03697C3.85978 6.38079 3.66663 6.8471 3.66663 7.33333V33C3.66663 36.0323 6.13429 38.5 9.16663 38.5H34.8333C37.8656 38.5 40.3333 36.0323 40.3333 33V22C40.3333 21.5138 40.1401 21.0475 39.7963 20.7036C39.4525 20.3598 38.9862 20.1667 38.5 20.1667ZM9.16663 34.8333C8.6804 34.8333 8.21408 34.6402 7.87026 34.2964C7.52645 33.9525 7.33329 33.4862 7.33329 33V9.16667H29.3333V33C29.3333 33.6435 29.4451 34.2613 29.6468 34.8333H9.16663ZM36.6666 33C36.6666 33.4862 36.4735 33.9525 36.1297 34.2964C35.7858 34.6402 35.3195 34.8333 34.8333 34.8333C34.3471 34.8333 33.8807 34.6402 33.5369 34.2964C33.1931 33.9525 33 33.4862 33 33V23.8333H36.6666V33Z"
+                                fill="#10B42B"/>
+                            <path
+                                d="M11 12.8333H25.6667V16.5H11V12.8333ZM11 20.1667H25.6667V23.8333H11V20.1667ZM20.1667 27.5H25.6667V31.1667H20.1667V27.5Z"
+                                fill="#10B42B"/>
+                        </svg>
 
-                <div class="ml-12">
-                    <div class="mt-2 text-sm text-gray-500">
-                        Laracasts offers thousands of video tutorials on Laravel, PHP, and JavaScript development. Check them out, see for yourself, and massively level up your development skills in the process.
-                    </div>
-
-                    <a href="https://laracasts.com">
-                        <div class="mt-3 flex items-center text-sm font-semibold text-indigo-700">
-                                <div>Start watching Laracasts</div>
-
-                                <div class="ml-1 text-indigo-500">
-                                    <svg viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                                </div>
+                        <div class="ml-4 text-lg text-gray-600 leading-7 font-semibold">Доступные
+                            рецепты
                         </div>
-                    </a>
-                </div>
+                    </div>
+                </inertia-link>
             </div>
 
-            <div class="p-6 border-t border-gray-200">
-                <div class="flex items-center">
-                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-400"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                    <div class="ml-4 text-lg text-gray-600 leading-7 font-semibold"><a href="https://tailwindcss.com/">Tailwind</a></div>
-                </div>
-
-                <div class="ml-12">
-                    <div class="mt-2 text-sm text-gray-500">
-                        Laravel Jetstream is built with Tailwind, an amazing utility first CSS framework that doesn't get in your way. You'll be amazed how easily you can build and maintain fresh, modern designs with this wonderful framework at your fingertips.
+            <div class="p-6 border-t border-gray-200 bg-gray-100">
+                <inertia-link :href="route('products.index')">
+                    <div class="flex items-center">
+                        <svg class="w-8 h-8 text-gray-400" viewBox="0 0 19 19" fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="9.5" cy="9.5" r="9" fill="white" stroke="#10B42B"/>
+                            <line x1="9.5" y1="5" x2="9.5" y2="14" stroke="#10B42B"/>
+                            <line x1="14" y1="9.5" x2="5" y2="9.5" stroke="#10B42B"/>
+                        </svg>
+                        <div class="ml-4 text-lg text-gray-600 leading-7 font-semibold">Добавить
+                            продукты</div>
                     </div>
-                </div>
+                </inertia-link>
             </div>
 
-            <div class="p-6 border-t border-gray-200 md:border-l">
-                <div class="flex items-center">
-                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-400"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                    <div class="ml-4 text-lg text-gray-600 leading-7 font-semibold">Authentication</div>
-                </div>
-
-                <div class="ml-12">
-                    <div class="mt-2 text-sm text-gray-500">
-                        Authentication and registration views are included with Laravel Jetstream, as well as support for user email verification and resetting forgotten passwords. So, you're free to get started what matters most: building your application.
+            <div class="p-6 border-t border-gray-200 md:border-l bg-gray-100">
+                <inertia-link :href="route('recipes.index')">
+                    <div class="flex items-center">
+                        <svg class="w-8 h-8 text-gray-400" viewBox="0 0 44 44" fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M38.5 20.1667H33V7.33333C33 6.8471 32.8068 6.38079 32.463 6.03697C32.1192 5.69315 31.6529 5.5 31.1666 5.5H5.49996C5.01373 5.5 4.54741 5.69315 4.2036 6.03697C3.85978 6.38079 3.66663 6.8471 3.66663 7.33333V33C3.66663 36.0323 6.13429 38.5 9.16663 38.5H34.8333C37.8656 38.5 40.3333 36.0323 40.3333 33V22C40.3333 21.5138 40.1401 21.0475 39.7963 20.7036C39.4525 20.3598 38.9862 20.1667 38.5 20.1667ZM9.16663 34.8333C8.6804 34.8333 8.21408 34.6402 7.87026 34.2964C7.52645 33.9525 7.33329 33.4862 7.33329 33V9.16667H29.3333V33C29.3333 33.6435 29.4451 34.2613 29.6468 34.8333H9.16663ZM36.6666 33C36.6666 33.4862 36.4735 33.9525 36.1297 34.2964C35.7858 34.6402 35.3195 34.8333 34.8333 34.8333C34.3471 34.8333 33.8807 34.6402 33.5369 34.2964C33.1931 33.9525 33 33.4862 33 33V23.8333H36.6666V33Z"
+                                fill="#10B42B"/>
+                            <path
+                                d="M11 12.8333H25.6667V16.5H11V12.8333ZM11 20.1667H25.6667V23.8333H11V20.1667ZM20.1667 27.5H25.6667V31.1667H20.1667V27.5Z"
+                                fill="#10B42B"/>
+                        </svg>
+                        <div class="ml-4 text-lg text-gray-600 leading-7 font-semibold">Все рецепты</div>
                     </div>
-                </div>
+                </inertia-link>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-    import JetApplicationLogo from '@/Jetstream/ApplicationLogo'
+import JetApplicationLogo from '@/Jetstream/ApplicationLogo'
 
-    export default {
-        components: {
-            JetApplicationLogo,
-        },
-    }
+export default {
+    components: {
+        JetApplicationLogo,
+    },
+}
 </script>
