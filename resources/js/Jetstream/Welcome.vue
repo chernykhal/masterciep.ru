@@ -39,7 +39,7 @@
             </div>
 
             <div class="p-6 border-t border-gray-200 bg-gray-100">
-                <inertia-link :href="route('products.index')">
+                <inertia-link :href="route('types.index')">
                     <div class="flex items-center">
                         <svg class="w-8 h-8 text-gray-400" viewBox="0 0 19 19" fill="none"
                              xmlns="http://www.w3.org/2000/svg">
