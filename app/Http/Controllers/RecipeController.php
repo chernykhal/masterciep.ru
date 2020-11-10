@@ -178,7 +178,6 @@ class RecipeController extends Controller
         $user = Auth::getUser();
         $userProducts = $user->products;
         $recipes = $this->recipes->with('products')->filter($frd)->get();
-
         foreach ($recipes as $recipe) {
             $recipeProducts = $recipe->products;
             $recipeProductsCount = $recipeProducts->count();
@@ -194,8 +193,6 @@ class RecipeController extends Controller
             }
             if ($recipeDiffScore === $recipeProductsCount) {
                 $availableRecipes[] = $recipe;
-            } else {
-                $availableRecipes = [];
             }
         }
         $availableRecipes = $availableRecipes ?? [];
