@@ -154,7 +154,7 @@ class ProductController extends Controller
     {
         $frd = $request->all();
         $validated = Validator::make($frd, [
-            'unit_value' => ['required'],
+            'unit_value' => ['required','max:8'],
         ])->validateWithBag('addProduct');
         $user = \Auth::getUser();
         $user->products()->detach($product->getKey());
@@ -175,7 +175,7 @@ class ProductController extends Controller
         $frd = $request->all();
         $frd['search'] = $frd['search'] ?? '';
         $user = Auth::getUser();
-        $products = $user->products()->filter($frd)->get()->toArray();
+        $products = $user->products()->filter($frd)->orderbyDesc('id')->get()->toArray();
 
         return Inertia::render('Products/User/Index/Index', ['search' => $frd['search'], 'products' => $products]);
     }
@@ -196,7 +196,7 @@ class ProductController extends Controller
     {
         $frd = $request->all();
         $validated = Validator::make($frd, [
-            'unit_value' => ['required'],
+            'unit_value' => ['required','max:8'],
         ])->validateWithBag('updateProduct');
         $user = \Auth::getUser();
         $user->products()->detach($product->getKey());
