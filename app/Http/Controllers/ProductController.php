@@ -182,6 +182,7 @@ class ProductController extends Controller
 
     /**
      * @param Product $product
+     * @return RedirectResponse
      */
     public function usersProductsDestroy(Product $product)
     {
