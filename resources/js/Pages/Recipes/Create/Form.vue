@@ -45,7 +45,7 @@
                 <jet-label class="text-center" value="Ингредиенты"/>
                 <div class="relative flex flex-row justify-between" v-for="(ingredient, index) in form.ingredients">
                     <div class="list-item flex-auto flex flex-row justify-between">
-                        <div class="relative flex-auto">
+                        <div class="relative flex-3">
                             <select name="product_id[]"
                                     class="block appearance-none bg-white text-gray-700 w-full py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     v-model="ingredient.product_id">
@@ -64,13 +64,13 @@
                             </div>
                             <jet-input-error :message="form.error('product_id')" class="mt-2"/>
                         </div>
-                        <div class="flex-1 ml-4">
+                        <div class="w-1/6 ml-4">
                             <jet-input type="number"
                                        class="block w-full border-r-0 border-t-0 border-l-0 border-r-0 unit_input text-center"
                                        v-model="ingredient.unit_value"/>
                             <jet-input-error :message="form.error('unit_value')" class="mt-2"/>
                         </div>
-                        <div class="flex-auto self-center text-right mr-4 flex justify-end">
+                        <div class="w-1/6 self-center text-right mr-4 flex justify-end">
                             <button @click="removeIngredient(ingredient)" type="button" class="focus:outline-none self-center">
                                 <svg class="w-5 h-5" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="9.5" cy="9.5" r="9" fill="white" stroke="#FF0000"/>
