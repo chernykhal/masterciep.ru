@@ -31,6 +31,7 @@ Route::resource('recipes', RecipeController::class)->except('store')->middleware
 Route::put('types/store', [ProductTypeController::class, 'store'])->name('types.store')->middleware('auth');
 Route::resource('types', ProductTypeController::class)->except(['store'])->middleware('auth');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia\Inertia::render('Dashboard');
 })->name('dashboard');
+Route::redirect('/','/dashboard');
