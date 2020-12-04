@@ -21,18 +21,18 @@ mix.js('resources/js/app.js', 'public/js')
 mix.browserSync({
     proxy:  // проксирование вашего удаленного сервера, не важно на чем back-end
         {
-            target: "http://masterciep.test",
+            target: "https://masterciep.test",
             ws: true
         },
     // logPrefix: 'masterciep.test', // префикс для лога bs, маловажная настройка
-    // host: 'masterciep.test', // можно использовать ip сервера
+    host: 'masterciep.test', // можно использовать ip сервера
     port: 8000, // порт через который будет проксироваться сервер
     // open: 'external', // указываем, что наш url внешний
     notify: true,
     ghost: true,
-    // httpModule: 'http2',
-    // https: {
-    //     key: "./ssl/privkey.pem",
-    //     cert: "./ssl/fullchain.pem",
-    // },
+     // httpModule: 'http2',
+     // https: {
+     //    key: "./ssl/privkey.pem",
+     //    cert: "./ssl/fullchain.pem",
+     // },
 });
