@@ -1,16 +1,16 @@
 <?php
 
 return [
-    'name' => 'LaravelPWA',
+    'name' => 'Мастер Рецепт',
     'manifest' => [
-        'name' => env('Мастер Сип', 'My PWA App'),
-        'short_name' => 'PWA',
-        'start_url' => '/',
+        'name' => env('APP_NAME', 'My PWA App'),
+        'short_name' => 'МР',
+        'start_url' => '/dashboard',
         'background_color' => '#ffffff',
         'theme_color' => '#000000',
         'display' => 'standalone',
         'orientation'=> 'any',
-        'status_bar'=> 'black',
+        'status_bar'=> 'white',
         'icons' => [
             '72x72' => [
                 'path' => '/images/icons/icon-72x72.png',
