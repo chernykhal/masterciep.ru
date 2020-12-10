@@ -65,5 +65,16 @@
                 photoPreview: null,
             }
         },
+        methods:{
+            updateProfileInformation() {
+                if (this.$refs.photo) {
+                    this.form.photo = this.$refs.photo.files[0]
+                }
+
+                this.form.post(route('user-profile-information.update'), {
+                    preserveScroll: true
+                });
+            },
+        }
     }
 </script>
