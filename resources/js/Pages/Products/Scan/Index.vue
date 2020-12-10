@@ -6,8 +6,7 @@
             </h2>
         </template>
         <qrcode-stream @decode="onDecode"></qrcode-stream>
-        <qrcode-capture @decode="onDecode"/>
-        <p class="decode-result">Last result: <b>{{ result }}</b></p>
+        <qrcode-capture class="hidden sm:block" @decode="onDecode"/>
     </app-layout>
 </template>
 
