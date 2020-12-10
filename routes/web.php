@@ -21,6 +21,9 @@ Route::get('my/products', [ProductController::class, 'usersProductsIndex'])->nam
 Route::post('my/products/{product}', [ProductController::class, 'usersProductsUpdate'])->name('my.products.update')->middleware('auth');
 Route::post('my/products/{product}/destroy', [ProductController::class, 'usersProductsDestroy'])->name('my.products.destroy')->middleware('auth');
 Route::post('products/{product}/add', [ProductController::class, 'add'])->name('products.add')->middleware('auth');
+Route::get('scan',[ProductController::class,'scan'])->name('products.scan')->middleware('auth');
+Route::get('scan-confirmation',[ProductController::class,'getProductsFromQr'])->name('products.scan.getProductsFromQr')->middleware('auth');
+Route::post('scan-add',[ProductController::class,'addProductsFromQr'])->name('products.scan.addProductsFromQr')->middleware('auth');
 Route::resource('products', ProductController::class)->except('store')->middleware('auth');
 
 Route::put('recipes/store', [RecipeController::class, 'store'])->name('recipes.store')->middleware('auth');
@@ -30,6 +33,7 @@ Route::resource('recipes', RecipeController::class)->except('store')->middleware
 
 Route::put('types/store', [ProductTypeController::class, 'store'])->name('types.store')->middleware('auth');
 Route::resource('types', ProductTypeController::class)->except(['store'])->middleware('auth');
+
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia\Inertia::render('Dashboard');

@@ -5,7 +5,7 @@ return [
     'manifest' => [
         'name' => env('APP_NAME', 'My PWA App'),
         'short_name' => 'Мастер Рецепт',
-        'start_url' => '/dashboard',
+        'start_url' => '/',
         'background_color' => '#ffffff',
         'theme_color' => '#000000',
         'display' => 'standalone',

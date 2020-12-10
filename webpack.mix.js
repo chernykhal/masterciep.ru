@@ -21,7 +21,7 @@ mix.js('resources/js/app.js', 'public/js')
 mix.browserSync({
     proxy:  // проксирование вашего удаленного сервера, не важно на чем back-end
         {
-            target: "http://masterciep.test",
+            target: "https://masterciep.test",
             ws: true
         },
     // logPrefix: 'masterciep.test', // префикс для лога bs, маловажная настройка

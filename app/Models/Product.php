@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use phpDocumentor\Reflection\Types\Mixed_;
 
 /**
  * App\Models\Product
@@ -55,7 +56,7 @@ class Product extends Model
             ->toArray();
     }
 
-    public function scopeFilter(Builder $query, array $frd): Builder
+    public function scopeFilter(Builder $query, array $frd)
     {
         foreach ($frd as $key => $value) {
             if (null === $value) {
@@ -79,12 +80,28 @@ class Product extends Model
                         });
                     }
                     break;
+                case 'products':
+                    {
+                       $query->where(function (Builder $query) use ($value) {
+                            foreach ($value as $key => $name) {
+                                if ($key === 0) {
+                                    $query
+                                        ->where('name', 'like', '%' . $name . '%');
+                                } else {
+                                    $query
+                                        ->orWhere('name', 'like', '%' . $name . '%');
+                                }
+                            }
+                        });
+                    }
+                    break;
             }
         }
         return $query;
     }
 
-    public function scopeUserFilter(Builder $query): Builder
+    public
+    function scopeUserFilter(Builder $query): Builder
     {
         return $query->whereHas('user', static function (Builder $query): Builder {
             return $query->where('user_id', \Auth::id());
@@ -94,7 +111,8 @@ class Product extends Model
     /**
      * @return string
      */
-    public function getName(): string
+    public
+    function getName(): string
     {
         return $this->name;
     }
@@ -102,7 +120,8 @@ class Product extends Model
     /**
      * @param string $name
      */
-    public function setName(string $name): void
+    public
+    function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -110,7 +129,8 @@ class Product extends Model
     /**
      * @return string
      */
-    public function getImageUrl(): string
+    public
+    function getImageUrl(): string
     {
         return $this->image_url;
     }
@@ -118,7 +138,8 @@ class Product extends Model
     /**
      * @param string $image_url
      */
-    public function setImageUrl(string $image_url): void
+    public
+    function setImageUrl(string $image_url): void
     {
         $this->image_url = $image_url;
     }
@@ -126,7 +147,8 @@ class Product extends Model
     /**
      * @return string
      */
-    public function getUnit(): string
+    public
+    function getUnit(): string
     {
         return $this->unit;
     }
@@ -134,7 +156,8 @@ class Product extends Model
     /**
      * @param string $unit
      */
-    public function setUnit(string $unit): void
+    public
+    function setUnit(string $unit): void
     {
         $this->unit = $unit;
     }
@@ -142,7 +165,8 @@ class Product extends Model
     /**
      * @return int
      */
-    public function getProductTypeId(): int
+    public
+    function getProductTypeId(): int
     {
         return $this->product_type_id;
     }
@@ -150,7 +174,8 @@ class Product extends Model
     /**
      * @param int $product_type_id
      */
-    public function setProductTypeId(int $product_type_id): void
+    public
+    function setProductTypeId(int $product_type_id): void
     {
         $this->product_type_id = $product_type_id;
     }
@@ -158,12 +183,14 @@ class Product extends Model
     /**
      * @return BelongsTo
      */
-    public function type(): BelongsTo
+    public
+    function type(): BelongsTo
     {
         return $this->belongsTo(ProductType::class, 'product_type_id');
     }
 
-    public function user(): BelongsToMany
+    public
+    function user(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'users_products', 'product_id', 'user_id')
             ->withPivot('unit_value');
@@ -172,7 +199,8 @@ class Product extends Model
     /**
      * @return BelongsToMany
      */
-    public function recipes(): BelongsToMany
+    public
+    function recipes(): BelongsToMany
     {
         return $this->belongsToMany(Recipe::class, 'recipes_products', 'product_id', 'recipe_id')->withPivot('unit_value');
     }

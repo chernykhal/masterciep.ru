@@ -20,7 +20,8 @@
         "laravel/tinker": "^2.5",
         "laravelcollective/html": "^6.2",
         "silviolleite/laravelpwa": "^2.0",
-        "tightenco/ziggy": "^0.9.4"
+        "tightenco/ziggy": "^0.9.4",
+      "ext-curl": "*"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.8",
