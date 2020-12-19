@@ -7,4 +7,5 @@ Created by Alexander Chernykh 2020 <br><br>
   <li>Vue JS</li>
   <li>InertiaJS</li>
   <li>Tailwind</li>
+  <li>НФС api по определению позиций на чеке</li>
 </ul>
